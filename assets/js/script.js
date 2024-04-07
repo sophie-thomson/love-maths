@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let button of buttons) {
         button.addEventListener("click", function() {
             if (this.getAttribute("data-type") === "submit") { //if the button with the data-type attribute for 'submit' is clicked
-                alert("You clicked Submit!"); //create an alert to say 'You clicked...'
+                checkAnswer();//run the checkAnswer() function
+                //alert("You clicked Submit!"); //create an alert to say 'You clicked...'
             } else {
                 let gameType = this.getAttribute("data-type");//tells the system which 'gameType' they have selected from the other data-type options
                 runGame(gameType);
@@ -47,8 +48,17 @@ function runGame(gameType) {
     }
 }
 
+/** Checks the answer against the first element in the returned calculateCorrectAnswer array */
 function checkAnswer() {
+    let userAnswer = parseInt(document.getElementById("answer-box").value); //collects the answer entered in the 'answer-box' as an integer
+    let calculatedAnswer = calculateCorrectAnswer(); //returns an 'array' where the calculatedAnswer is the outcome of the calculateCorrectAnswer function
+    let isCorrect = userAnswer === calculatedAnswer[0]; //compares the userAnswer from the 'answer-box' to the first value of calculatedAnswer and states 'true' if it 'isCorrect' or 'false' if not.
 
+    if (isCorrect) {
+        alert("Hey! You got it right! :D"); //if is Correct (true response) then the message is 'Hey...'
+    } else {
+        alert(`Awwww... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}! Better luck next time.`); 
+    }
 }
 
 /** Gets the operands (the numbers) and the operator (plus, minus etc)
@@ -60,7 +70,8 @@ function calculateCorrectAnswer() {
     let operator = document.getElementById("operator").innerText; //collects the operator from the DOM so it can tell the script which 'gameType' to run for the relevant operator.
 
     if (operator === "+") {
-        return [operand1 + operand2, "addition"]; //returns an array which tells the script what to do with the numbers (add them together) and which gameType to run next. 
+        return [operand1 + operand2, "addition"]; //returns an array which tells the script what to do with the numbers (add them together is the first item in the array) 
+        //and which gameType to run next (the second item in the array). 
         //Stay on 'addition'until user changes it.
     } else {
         alert(`Unimplemented operator ${operator}`); //alert message to test if operator is unrecognised, what to do.
