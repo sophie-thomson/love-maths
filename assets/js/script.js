@@ -1,1 +1,34 @@
-console.log("Connected!");
+// Everything created within functions to avoid too much global scope
+
+function runGame() {
+
+}
+
+function checkAnswer() {
+
+}
+
+function calculateCorrectAnswer() {
+
+}
+
+function incrementScore() {
+
+}
+
+function incrementWrongAnswer() {
+
+}
+
+function displayAdditionQuestion() {
+
+}
+
+function displaySubtractQuestion() {
+
+}
+
+function displayMultiplyQuestion() {
+
+}
+
