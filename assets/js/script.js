@@ -51,8 +51,21 @@ function checkAnswer() {
 
 }
 
+/** Gets the operands (the numbers) and the operator (plus, minus etc)
+ * directly from the DOM, and returns the correct answer.
+ */
 function calculateCorrectAnswer() {
+    let operand1 = parseInt(document.getElementById("operand1").innerText); //collects the numbers from the 'innerText' integer displayed in the html (in the DOM)
+    let operand2 = parseInt(document.getElementById("operand2").innerText);
+    let operator = document.getElementById("operator").innerText; //collects the operator from the DOM so it can tell the script which 'gameType' to run for the relevant operator.
 
+    if (operator === "+") {
+        return [operand1 + operand2, "addition"]; //returns an array which tells the script what to do with the numbers (add them together) and which gameType to run next. 
+        //Stay on 'addition'until user changes it.
+    } else {
+        alert(`Unimplemented operator ${operator}`); //alert message to test if operator is unrecognised, what to do.
+        throw `Unimplemented operator ${operator}. Aborting!`;
+    }
 }
 
 function incrementScore() {
