@@ -23,9 +23,17 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 // Everything created within functions to avoid too much global scope
+// Using a 'docstring' instead of a comment (as below with asterisks) tells the code to 
+//use the description as a prompt everytime that function is called. A useful reminder!!
+
+/** The main game function 'runGame' is a repeated or 'looped' function that is called when the script is first loaded 
+ * and after the user's answer has been processed. */
 
 function runGame() {
-
+    // Creates two random numbers between 1 and 25. Math.floor rounds the number down to a whole integer.
+    // The +1 at the end is to ensure that '0' isn't ever selected as an operand
+    let num1 = Math.floor(Math.random() *25) +1;
+    let num2 = Math.floor(Math.random() *25) +1;
 }
 
 function checkAnswer() {
