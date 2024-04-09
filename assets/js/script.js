@@ -20,12 +20,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 //alert(`You clicked ${gameType}`); //Make sure to use backquote when you want to insert a template literal
             }
         }
-        )
+        );
 
     }
+    // Adds and event listener to the 'enter' key so that it triggers the 'submit' function when pressed 
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") { // If the key pressed is 'enter' then run following code
+            checkAnswer();
+        }
+    });
     runGame("addition");
 
-})
+});
 
 // Everything created within functions to avoid too much global scope
 // Using a 'docstring' instead of a comment (as below with asterisks) tells the code to 
@@ -35,6 +41,10 @@ document.addEventListener("DOMContentLoaded", function() {
  * and after the user's answer has been processed. */
 
 function runGame(gameType) {
+
+    document.getElementById("answer-box").value = ""; // gets the current content of the answer box and changes the value to nothing - ""
+    document.getElementById("answer-box").focus();//makes the answer box the 'focus' of the page and places the cursor there at start
+
     // Creates two random numbers between 1 and 25. Math.floor rounds the number down to a whole integer.
     // The +1 at the end is to ensure that '0' isn't ever selected as an operand
     let num1 = Math.floor(Math.random() *25) +1;
@@ -47,11 +57,13 @@ function runGame(gameType) {
         displayMultiplyQuestion(num1, num2);
     } else  if (gameType === "subtract") {
         displaySubtractQuestion(num1, num2);
+    } else  if (gameType === "division") {
+        displayDivisionQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`; // checking that the gameType is recongised - if not then error message shown.
     }
-}
+};
 
 /** Checks the answer against the first element in the returned calculateCorrectAnswer array */
 function checkAnswer() {
@@ -66,7 +78,9 @@ function checkAnswer() {
         alert(`Awwww... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}! Better luck next time.`);
         incrementWrongAnswer(); //runs the incrementWrongAnswer() function for adding an incorrect score to the tally
     }
-}
+
+    runGame(calculatedAnswer[1]);//runs the game again automatically at the end of each 'checkAnswer' function
+};
 
 /** Gets the operands (the numbers) and the operator (plus, minus etc)
  * directly from the DOM, and returns the correct answer.
@@ -84,6 +98,8 @@ function calculateCorrectAnswer() {
         return [operand1 * operand2, "multiply"];
     } else if (operator === "-"){
         return [operand1 - operand2, "subtract"];
+    } else if (operator === "/"){
+        return [operand1 / operand2, "division"];
     }
     else {
         alert(`Unimplemented operator ${operator}`); //alert message to test if operator is unrecognised, what to do.
@@ -122,3 +138,8 @@ function displayMultiplyQuestion(operand1, operand2) {
     document.getElementById("operator").textContent = "x";
 }
 
+function displayDivisionQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1; //'gets' the element in the html with id "operand1" and set it's textContent to the number generated in the JS.
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "/";
+}
